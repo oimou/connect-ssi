@@ -14,7 +14,12 @@ module.exports = function connectSSI(opt) {
 
   return function(req, res, next) {
 
-    var url = req.url === '/' ? ('/index' + ext) : req.url;
+    var url;
+    if (req.url[req.url.length - 1] === "/") {
+      url = req.url + "index" + ext;
+    } else {
+      url = req.url;
+    }
     var filename = baseDir + url;
 
     if (url.indexOf(ext) > -1 && fs.existsSync(filename)) {
